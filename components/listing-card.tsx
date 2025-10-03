@@ -57,14 +57,12 @@ export function ListingCard({ listing }: ListingCardProps) {
       className="w-full hover:scale-[1.02] transition-transform"
     >
       <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-        <div className="w-full aspect-[4/3] overflow-hidden rounded-xl">
-          {listing.images && listing.images.length > 0 && (
-            <Image
-              alt={listing.title}
-              className="object-cover w-full h-full"
-              src={listing.images[0]}
-            />
-          )}
+        <div className="w-full aspect-[4/3] overflow-hidden rounded-xl bg-default-100 flex items-center justify-center">
+          <Image
+            alt={listing.title}
+            className="object-cover w-full h-full"
+            src={listing.images && listing.images.length > 0 ? listing.images[0] : '/no-image.jpg'}
+          />
         </div>
       </CardHeader>
       <CardBody className="overflow-visible py-2 px-4">

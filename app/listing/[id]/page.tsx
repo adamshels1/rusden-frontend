@@ -145,30 +145,30 @@ export default function ListingDetailPage() {
           <div className="flex flex-col md:flex-row gap-8">
             {/* Left column for images */}
             <div className="md:w-1/2">
-              {listing.images && listing.images.length > 0 && (
-                <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4">
+                <div className="w-full aspect-[4/3] overflow-hidden rounded-xl bg-default-100 flex items-center justify-center">
                   <Image
-                    src={listing.images[selectedImage]}
+                    src={listing.images && listing.images.length > 0 ? listing.images[selectedImage] : '/no-image.jpg'}
                     alt={listing.title}
-                    className="w-full h-auto object-cover rounded-xl"
+                    className="w-full h-full object-cover"
                   />
-                  {listing.images.length > 1 && (
-                    <div className="flex gap-2 overflow-x-auto">
-                      {listing.images.map((image, index) => (
-                        <Image
-                          key={index}
-                          src={image}
-                          alt={`${listing.title} ${index + 1}`}
-                          className={`w-20 h-20 object-cover rounded-lg cursor-pointer ${
-                            selectedImage === index ? 'ring-2 ring-primary' : ''
-                          }`}
-                          onClick={() => setSelectedImage(index)}
-                        />
-                      ))}
-                    </div>
-                  )}
                 </div>
-              )}
+                {listing.images && listing.images.length > 1 && (
+                  <div className="flex gap-2 overflow-x-auto">
+                    {listing.images.map((image, index) => (
+                      <Image
+                        key={index}
+                        src={image}
+                        alt={`${listing.title} ${index + 1}`}
+                        className={`w-20 h-20 object-cover rounded-lg cursor-pointer ${
+                          selectedImage === index ? 'ring-2 ring-primary' : ''
+                        }`}
+                        onClick={() => setSelectedImage(index)}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Right column for details */}
