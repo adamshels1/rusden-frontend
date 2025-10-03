@@ -21,12 +21,16 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [totalListings, setTotalListings] = useState(0);
 
-  // Читаем категорию из URL
+  // Читаем категорию и подкатегорию из URL
   useEffect(() => {
     const category = searchParams.get('category');
-    if (category) {
-      setFilters({ category });
-    }
+    const subcategory = searchParams.get('subcategory');
+    const newFilters: ListingFilters = {};
+
+    if (category) newFilters.category = category;
+    if (subcategory) newFilters.subcategory = subcategory;
+
+    setFilters(newFilters);
   }, [searchParams]);
 
   useEffect(() => {
