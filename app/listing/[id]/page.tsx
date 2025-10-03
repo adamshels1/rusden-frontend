@@ -12,7 +12,8 @@ import { getListing } from '@/lib/api';
 import type { Listing } from '@/types/listing';
 import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { FiArrowLeft, FiPhone, FiMapPin, FiCalendar } from 'react-icons/fi';
+import { FiArrowLeft, FiMapPin, FiCalendar } from 'react-icons/fi';
+import { FaTelegram, FaWhatsapp } from 'react-icons/fa';
 
 export default function ListingDetailPage() {
   const params = useParams();
@@ -107,7 +108,7 @@ export default function ListingDetailPage() {
                   <Image
                     src={listing.images[selectedImage]}
                     alt={listing.title}
-                    className="w-full h-auto object-cover rounded-xl aspect-[4/3]"
+                    className="w-full h-auto object-cover rounded-xl"
                   />
                   {listing.images.length > 1 && (
                     <div className="flex gap-2 overflow-x-auto">
@@ -141,22 +142,22 @@ export default function ListingDetailPage() {
                   <div className="flex flex-col gap-2">
                     {listing.contact_info.phone && (
                       <Button
-                        color="primary"
-                        startContent={<FiPhone />}
+                        startContent={<FaWhatsapp />}
                         as="a"
-                        href={`tel:${listing.contact_info.phone}`}
-                        className="w-full sm:w-auto"
+                        href={`https://wa.me/${listing.contact_info.phone.replace(/[^0-9]/g, '')}`}
+                        target="_blank"
+                        className="w-full sm:w-auto bg-[#25D366] text-white hover:bg-[#20BA5A]"
                       >
                         {listing.contact_info.phone}
                       </Button>
                     )}
                     {listing.contact_info.telegram && (
                       <Button
-                        color="secondary"
+                        startContent={<FaTelegram />}
                         as="a"
                         href={`https://t.me/${listing.contact_info.telegram.replace('@', '')}`}
                         target="_blank"
-                        className="w-full sm:w-auto"
+                        className="w-full sm:w-auto bg-[#0088cc] text-white hover:bg-[#006699]"
                       >
                         {listing.contact_info.telegram}
                       </Button>

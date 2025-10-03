@@ -31,7 +31,7 @@ export function ListingCard({ listing }: ListingCardProps) {
       className="w-full hover:scale-[1.02] transition-transform"
     >
       <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-        <div className="w-full aspect-[16/9] overflow-hidden rounded-xl">
+        <div className="w-full aspect-[4/3] overflow-hidden rounded-xl">
           {listing.images && listing.images.length > 0 && (
             <Image
               alt={listing.title}
