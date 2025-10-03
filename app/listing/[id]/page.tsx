@@ -98,73 +98,81 @@ export default function ListingDetailPage() {
 
         <Divider />
 
-        <CardBody className="p-6 gap-6">
-          {listing.images && listing.images.length > 0 && (
-            <div className="flex flex-col gap-4">
-              <Image
-                src={listing.images[selectedImage]}
-                alt={listing.title}
-                className="w-full h-[400px] object-cover rounded-xl"
-              />
-              {listing.images.length > 1 && (
-                <div className="flex gap-2 overflow-x-auto">
-                  {listing.images.map((image, index) => (
-                    <Image
-                      key={index}
-                      src={image}
-                      alt={`${listing.title} ${index + 1}`}
-                      className={`w-20 h-20 object-cover rounded-lg cursor-pointer ${
-                        selectedImage === index ? 'ring-2 ring-primary' : ''
-                      }`}
-                      onClick={() => setSelectedImage(index)}
-                    />
-                  ))}
+        <CardBody className="p-6">
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Left column for images */}
+            <div className="md:w-1/2">
+              {listing.images && listing.images.length > 0 && (
+                <div className="flex flex-col gap-4">
+                  <Image
+                    src={listing.images[selectedImage]}
+                    alt={listing.title}
+                    className="w-full h-auto object-cover rounded-xl aspect-[4/3]"
+                  />
+                  {listing.images.length > 1 && (
+                    <div className="flex gap-2 overflow-x-auto">
+                      {listing.images.map((image, index) => (
+                        <Image
+                          key={index}
+                          src={image}
+                          alt={`${listing.title} ${index + 1}`}
+                          className={`w-20 h-20 object-cover rounded-lg cursor-pointer ${
+                            selectedImage === index ? 'ring-2 ring-primary' : ''
+                          }`}
+                          onClick={() => setSelectedImage(index)}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
-          )}
 
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Описание</h2>
-            <p className="text-default-700 whitespace-pre-wrap">{listing.description}</p>
-          </div>
+            {/* Right column for details */}
+            <div className="md:w-1/2 flex flex-col gap-6">
+              <div>
+                <h2 className="text-xl font-semibold mb-2">Описание</h2>
+                <p className="text-default-700 whitespace-pre-wrap">{listing.description}</p>
+              </div>
 
-          {(listing.contact_info?.phone || listing.contact_info?.telegram) && (
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Контакты</h2>
-              <div className="flex flex-col gap-2">
-                {listing.contact_info.phone && (
-                  <Button
-                    color="primary"
-                    startContent={<FiPhone />}
-                    as="a"
-                    href={`tel:${listing.contact_info.phone}`}
-                    className="w-full sm:w-auto"
-                  >
-                    {listing.contact_info.phone}
-                  </Button>
-                )}
-                {listing.contact_info.telegram && (
-                  <Button
-                    color="secondary"
-                    as="a"
-                    href={`https://t.me/${listing.contact_info.telegram.replace('@', '')}`}
-                    target="_blank"
-                    className="w-full sm:w-auto"
-                  >
-                    {listing.contact_info.telegram}
-                  </Button>
+              {(listing.contact_info?.phone || listing.contact_info?.telegram) && (
+                <div>
+                  <h2 className="text-xl font-semibold mb-2">Контакты</h2>
+                  <div className="flex flex-col gap-2">
+                    {listing.contact_info.phone && (
+                      <Button
+                        color="primary"
+                        startContent={<FiPhone />}
+                        as="a"
+                        href={`tel:${listing.contact_info.phone}`}
+                        className="w-full sm:w-auto"
+                      >
+                        {listing.contact_info.phone}
+                      </Button>
+                    )}
+                    {listing.contact_info.telegram && (
+                      <Button
+                        color="secondary"
+                        as="a"
+                        href={`https://t.me/${listing.contact_info.telegram.replace('@', '')}`}
+                        target="_blank"
+                        className="w-full sm:w-auto"
+                      >
+                        {listing.contact_info.telegram}
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <Divider />
+
+              <div className="flex flex-col gap-2 text-small text-default-500">
+                {listing.ai_confidence && (
+                  <p>Точность категоризации: {Math.round(listing.ai_confidence * 100)}%</p>
                 )}
               </div>
             </div>
-          )}
-
-          <Divider />
-
-          <div className="flex flex-col gap-2 text-small text-default-500">
-            {listing.ai_confidence && (
-              <p>Точность категоризации: {Math.round(listing.ai_confidence * 100)}%</p>
-            )}
           </div>
         </CardBody>
       </Card>
