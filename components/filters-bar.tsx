@@ -1,9 +1,10 @@
 'use client';
 
 import { Select, SelectItem } from '@heroui/select';
+import { Autocomplete, AutocompleteItem } from '@heroui/autocomplete';
 import { Input } from '@heroui/input';
 import { useEffect, useState } from 'react';
-import { getCategories } from '@/lib/api';
+import { getCategories, getCities } from '@/lib/api';
 import type { ListingFilters } from '@/types/listing';
 
 interface FiltersBarProps {
@@ -13,9 +14,11 @@ interface FiltersBarProps {
 
 export function FiltersBar({ filters, onFiltersChange }: FiltersBarProps) {
   const [categories, setCategories] = useState<string[]>([]);
+  const [cities, setCities] = useState<string[]>([]);
 
   useEffect(() => {
     getCategories().then(setCategories).catch(console.error);
+    getCities().then(setCities).catch(console.error);
   }, []);
 
   const handleCategoryChange = (value: string) => {
@@ -55,13 +58,22 @@ export function FiltersBar({ filters, onFiltersChange }: FiltersBarProps) {
         ))}
       </Select>
 
-      <Input
+      <Autocomplete
         label="Город"
-        placeholder="Например: Анталья"
-        value={filters.location || ''}
-        onValueChange={handleLocationChange}
+        placeholder="Выберите город"
+        selectedKey={filters.location || null}
+        onSelectionChange={(key) => {
+          handleLocationChange(key as string || '');
+        }}
         className="w-full md:w-1/4"
-      />
+        allowsCustomValue
+      >
+        {cities.map((city) => (
+          <AutocompleteItem key={city} value={city}>
+            {city}
+          </AutocompleteItem>
+        ))}
+      </Autocomplete>
 
       <Input
         type="number"

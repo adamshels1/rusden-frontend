@@ -6,6 +6,7 @@ export async function getListings(filters?: ListingFilters): Promise<ListingsRes
   const params = new URLSearchParams();
 
   if (filters?.category) params.append('category', filters.category);
+  if (filters?.subcategory) params.append('subcategory', filters.subcategory);
   if (filters?.location) params.append('location', filters.location);
   if (filters?.minPrice) params.append('minPrice', filters.minPrice.toString());
   if (filters?.maxPrice) params.append('maxPrice', filters.maxPrice.toString());
@@ -59,4 +60,20 @@ export async function getCategories(): Promise<string[]> {
 
   const result = await response.json();
   return result.data.map((item: { name: string }) => item.name);
+}
+
+export async function getCities(): Promise<string[]> {
+  const response = await fetch(`${API_URL}/listings/cities`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch cities: ${response.statusText}`);
+  }
+
+  const result = await response.json();
+  return result.data;
 }
