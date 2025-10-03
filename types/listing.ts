@@ -25,6 +25,7 @@ export interface ListingsResponse {
   meta: {
     limit: number;
     offset: number;
+    total: number;
   };
 }
 
@@ -34,4 +35,6 @@ export interface ListingFilters {
   minPrice?: number;
   maxPrice?: number;
   search?: string;
+  limit?: number;
+  offset?: number;
 }

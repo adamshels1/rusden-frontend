@@ -10,6 +10,8 @@ export async function getListings(filters?: ListingFilters): Promise<ListingsRes
   if (filters?.minPrice) params.append('minPrice', filters.minPrice.toString());
   if (filters?.maxPrice) params.append('maxPrice', filters.maxPrice.toString());
   if (filters?.search) params.append('search', filters.search);
+  if (filters?.limit) params.append('limit', filters.limit.toString());
+  if (filters?.offset) params.append('offset', filters.offset.toString());
 
   const url = `${API_URL}/listings${params.toString() ? `?${params.toString()}` : ''}`;
 

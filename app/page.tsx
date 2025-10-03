@@ -2,24 +2,36 @@
 
 import { useState, useEffect } from 'react';
 import { Spinner } from '@heroui/spinner';
+import { Pagination } from '@heroui/pagination';
 import { ListingCard } from '@/components/listing-card';
 import { SearchBar } from '@/components/search-bar';
 import { FiltersBar } from '@/components/filters-bar';
 import { getListings } from '@/lib/api';
 import type { Listing, ListingFilters } from '@/types/listing';
 
+const LISTINGS_PER_PAGE = 12;
+
 export default function Home() {
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<ListingFilters>({});
+  const [page, setPage] = useState(1);
+  const [totalListings, setTotalListings] = useState(0);
 
   useEffect(() => {
     const fetchListings = async () => {
       setLoading(true);
       try {
-        const response = await getListings({ ...filters, search });
+        const offset = (page - 1) * LISTINGS_PER_PAGE;
+        const response = await getListings({
+          ...filters,
+          search,
+          limit: LISTINGS_PER_PAGE,
+          offset,
+        });
         setListings(response.data);
+        setTotalListings(response.meta.total);
       } catch (error) {
         console.error('Error fetching listings:', error);
       } finally {
@@ -32,7 +44,9 @@ export default function Home() {
     }, 300);
 
     return () => clearTimeout(timeoutId);
-  }, [search, filters]);
+  }, [search, filters, page]);
+
+  const totalPages = Math.ceil(totalListings / LISTINGS_PER_PAGE);
 
   return (
     <section className="flex flex-col gap-6 py-8 md:py-10 px-4 md:px-6 max-w-7xl mx-auto">
@@ -52,7 +66,7 @@ export default function Home() {
       ) : (
         <>
           <p className="text-small text-default-500">
-            Найдено: {listings.length} объявлений
+            Найдено: {totalListings} объявлений
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {listings.map((listing) => (
@@ -62,6 +76,15 @@ export default function Home() {
           {listings.length === 0 && (
             <div className="text-center py-20">
               <p className="text-default-500">Объявления не найдены</p>
+            </div>
+          )}
+          {totalPages > 1 && (
+            <div className="flex justify-center mt-6">
+              <Pagination
+                total={totalPages}
+                page={page}
+                onChange={setPage}
+              />
             </div>
           )}
         </>
