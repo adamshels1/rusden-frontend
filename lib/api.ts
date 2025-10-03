@@ -77,3 +77,22 @@ export async function getCities(): Promise<string[]> {
   const result = await response.json();
   return result.data;
 }
+
+export async function getSubcategories(category?: string): Promise<string[]> {
+  const params = new URLSearchParams();
+  if (category) params.append('category', category);
+
+  const response = await fetch(`${API_URL}/listings/subcategories${params.toString() ? `?${params.toString()}` : ''}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch subcategories: ${response.statusText}`);
+  }
+
+  const result = await response.json();
+  return result.data;
+}
