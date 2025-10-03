@@ -1,0 +1,173 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { Card, CardBody, CardHeader } from '@heroui/card';
+import { Image } from '@heroui/image';
+import { Chip } from '@heroui/chip';
+import { Button } from '@heroui/button';
+import { Spinner } from '@heroui/spinner';
+import { Divider } from '@heroui/divider';
+import { getListing } from '@/lib/api';
+import type { Listing } from '@/types/listing';
+import { formatDistanceToNow } from 'date-fns';
+import { ru } from 'date-fns/locale';
+import { FiArrowLeft, FiPhone, FiMapPin, FiCalendar } from 'react-icons/fi';
+
+export default function ListingDetailPage() {
+  const params = useParams();
+  const router = useRouter();
+  const [listing, setListing] = useState<Listing | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(0);
+
+  useEffect(() => {
+    const fetchListing = async () => {
+      try {
+        const data = await getListing(params.id as string);
+        setListing(data);
+      } catch (error) {
+        console.error('Error fetching listing:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchListing();
+  }, [params.id]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
+
+  if (!listing) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+        <p className="text-default-500">Объявление не найдено</p>
+        <Button color="primary" onPress={() => router.push('/')}>
+          На главную
+        </Button>
+      </div>
+    );
+  }
+
+  const formattedDate = formatDistanceToNow(new Date(listing.posted_date), {
+    addSuffix: true,
+    locale: ru,
+  });
+
+  return (
+    <section className="flex flex-col gap-6 py-8 md:py-10 px-4 md:px-6 max-w-5xl mx-auto">
+      <Button
+        startContent={<FiArrowLeft />}
+        variant="light"
+        onPress={() => router.back()}
+        className="w-fit"
+      >
+        Назад
+      </Button>
+
+      <Card className="w-full">
+        <CardHeader className="flex-col items-start gap-4 p-6">
+          <div className="flex justify-between w-full items-start">
+            <h1 className="text-3xl font-bold">{listing.title}</h1>
+            {listing.price && listing.currency && (
+              <Chip color="primary" size="lg" variant="flat" className="text-xl font-bold">
+                {listing.price.toLocaleString('ru-RU')} {listing.currency}
+              </Chip>
+            )}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Chip size="sm" color="primary">
+              {listing.category}
+            </Chip>
+            {listing.location && (
+              <Chip size="sm" startContent={<FiMapPin size={14} />}>
+                {listing.location}
+              </Chip>
+            )}
+            <Chip size="sm" startContent={<FiCalendar size={14} />}>
+              {formattedDate}
+            </Chip>
+          </div>
+        </CardHeader>
+
+        <Divider />
+
+        <CardBody className="p-6 gap-6">
+          {listing.images && listing.images.length > 0 && (
+            <div className="flex flex-col gap-4">
+              <Image
+                src={listing.images[selectedImage]}
+                alt={listing.title}
+                className="w-full h-[400px] object-cover rounded-xl"
+              />
+              {listing.images.length > 1 && (
+                <div className="flex gap-2 overflow-x-auto">
+                  {listing.images.map((image, index) => (
+                    <Image
+                      key={index}
+                      src={image}
+                      alt={`${listing.title} ${index + 1}`}
+                      className={`w-20 h-20 object-cover rounded-lg cursor-pointer ${
+                        selectedImage === index ? 'ring-2 ring-primary' : ''
+                      }`}
+                      onClick={() => setSelectedImage(index)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          <div>
+            <h2 className="text-xl font-semibold mb-2">Описание</h2>
+            <p className="text-default-700 whitespace-pre-wrap">{listing.description}</p>
+          </div>
+
+          {(listing.contact_info?.phone || listing.contact_info?.telegram) && (
+            <div>
+              <h2 className="text-xl font-semibold mb-2">Контакты</h2>
+              <div className="flex flex-col gap-2">
+                {listing.contact_info.phone && (
+                  <Button
+                    color="primary"
+                    startContent={<FiPhone />}
+                    as="a"
+                    href={`tel:${listing.contact_info.phone}`}
+                    className="w-full sm:w-auto"
+                  >
+                    {listing.contact_info.phone}
+                  </Button>
+                )}
+                {listing.contact_info.telegram && (
+                  <Button
+                    color="secondary"
+                    as="a"
+                    href={`https://t.me/${listing.contact_info.telegram.replace('@', '')}`}
+                    target="_blank"
+                    className="w-full sm:w-auto"
+                  >
+                    {listing.contact_info.telegram}
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
+
+          <Divider />
+
+          <div className="flex flex-col gap-2 text-small text-default-500">
+            {listing.ai_confidence && (
+              <p>Точность категоризации: {Math.round(listing.ai_confidence * 100)}%</p>
+            )}
+          </div>
+        </CardBody>
+      </Card>
+    </section>
+  );
+}
