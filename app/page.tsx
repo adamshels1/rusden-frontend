@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Spinner } from '@heroui/spinner';
 import { Pagination } from '@heroui/pagination';
 import { ListingCard } from '@/components/listing-card';
@@ -12,12 +13,21 @@ import type { Listing, ListingFilters } from '@/types/listing';
 const LISTINGS_PER_PAGE = 12;
 
 export default function Home() {
+  const searchParams = useSearchParams();
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<ListingFilters>({});
   const [page, setPage] = useState(1);
   const [totalListings, setTotalListings] = useState(0);
+
+  // Читаем категорию из URL
+  useEffect(() => {
+    const category = searchParams.get('category');
+    if (category) {
+      setFilters({ category });
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchListings = async () => {
