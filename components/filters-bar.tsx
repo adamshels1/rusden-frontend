@@ -25,7 +25,7 @@ export function FiltersBar({ filters, onFiltersChange }: FiltersBarProps) {
     if (filters.category) {
       // Для realty и auto показываем стандартные подкатегории
       if (filters.category === 'realty' || filters.category === 'auto') {
-        setSubcategories(['rent', 'sale']);
+        setSubcategories(['Аренда', 'Продажа']);
       } else {
         // Для остальных загружаем из API
         getSubcategories(filters.category).then(setSubcategories).catch(console.error);
@@ -44,6 +44,8 @@ export function FiltersBar({ filters, onFiltersChange }: FiltersBarProps) {
     const labels: Record<string, string> = {
       'rent': 'Аренда',
       'sale': 'Продажа',
+      'Аренда': 'Аренда',
+      'Продажа': 'Продажа',
     };
     return labels[sub] || sub;
   };

@@ -24,6 +24,32 @@ export function ListingCard({ listing }: ListingCardProps) {
     router.push(`/listing/${listing.id}`);
   };
 
+  const categoryLabels: Record<string, string> = {
+    realty: 'Недвижимость',
+    job: 'Работа',
+    service: 'Услуги',
+    goods: 'Товары',
+    auto: 'Авто',
+    event: 'Мероприятия',
+  };
+
+  const subcategoryLabels: Record<string, string> = {
+    rent: 'Аренда',
+    sale: 'Продажа',
+    'Аренда': 'Аренда',
+    'Продажа': 'Продажа',
+  };
+
+  const handleCategoryClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const params = new URLSearchParams();
+    params.append('category', listing.category);
+    if (listing.subcategory) {
+      params.append('subcategory', listing.subcategory);
+    }
+    router.push(`/?${params.toString()}`);
+  };
+
   return (
     <Card
       isPressable
@@ -46,9 +72,26 @@ export function ListingCard({ listing }: ListingCardProps) {
           <h4 className="font-bold text-large line-clamp-2 flex-1">{listing.title}</h4>
         </div>
         <div className="flex gap-2 mb-2">
-          <Chip size="sm" color="primary" variant="flat">
-            {listing.category}
+          <Chip
+            size="sm"
+            color="primary"
+            variant="flat"
+            onClick={handleCategoryClick}
+            className="cursor-pointer hover:opacity-80"
+          >
+            {categoryLabels[listing.category] || listing.category}
           </Chip>
+          {listing.subcategory && (
+            <Chip
+              size="sm"
+              color="secondary"
+              variant="flat"
+              onClick={handleCategoryClick}
+              className="cursor-pointer hover:opacity-80"
+            >
+              {subcategoryLabels[listing.subcategory] || listing.subcategory}
+            </Chip>
+          )}
           {listing.location && (
             <Chip size="sm" color="default" variant="flat">
               {listing.location}

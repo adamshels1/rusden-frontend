@@ -22,6 +22,32 @@ export default function ListingDetailPage() {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
 
+  const categoryLabels: Record<string, string> = {
+    realty: 'Недвижимость',
+    job: 'Работа',
+    service: 'Услуги',
+    goods: 'Товары',
+    auto: 'Авто',
+    event: 'Мероприятия',
+  };
+
+  const subcategoryLabels: Record<string, string> = {
+    rent: 'Аренда',
+    sale: 'Продажа',
+    'Аренда': 'Аренда',
+    'Продажа': 'Продажа',
+  };
+
+  const handleCategoryClick = () => {
+    if (!listing) return;
+    const params = new URLSearchParams();
+    params.append('category', listing.category);
+    if (listing.subcategory) {
+      params.append('subcategory', listing.subcategory);
+    }
+    router.push(`/?${params.toString()}`);
+  };
+
   useEffect(() => {
     const fetchListing = async () => {
       try {
@@ -83,9 +109,24 @@ export default function ListingDetailPage() {
             )}
           </div>
           <div className="flex flex-wrap gap-2">
-            <Chip size="sm" color="primary">
-              {listing.category}
+            <Chip
+              size="sm"
+              color="primary"
+              onClick={handleCategoryClick}
+              className="cursor-pointer hover:opacity-80"
+            >
+              {categoryLabels[listing.category] || listing.category}
             </Chip>
+            {listing.subcategory && (
+              <Chip
+                size="sm"
+                color="secondary"
+                onClick={handleCategoryClick}
+                className="cursor-pointer hover:opacity-80"
+              >
+                {subcategoryLabels[listing.subcategory] || listing.subcategory}
+              </Chip>
+            )}
             {listing.location && (
               <Chip size="sm" startContent={<FiMapPin size={14} />}>
                 {listing.location}
