@@ -55,6 +55,7 @@ export default function ListingDetailPage() {
         setListing(data);
       } catch (error) {
         console.error('Error fetching listing:', error);
+        setListing(null);
       } finally {
         setLoading(false);
       }

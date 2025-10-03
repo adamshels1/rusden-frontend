@@ -30,8 +30,8 @@ const menuItems = [
     label: 'Недвижимость',
     category: 'realty',
     subcategories: [
-      { label: 'Продажа', href: '/?category=realty&subcategory=sale' },
-      { label: 'Аренда', href: '/?category=realty&subcategory=rent' },
+      { label: 'Продажа', href: '/?category=realty&subcategory=Продажа' },
+      { label: 'Аренда', href: '/?category=realty&subcategory=Аренда' },
     ]
   },
   { label: 'Работа', href: '/?category=job', category: 'job' },
@@ -41,8 +41,8 @@ const menuItems = [
     label: 'Авто',
     category: 'auto',
     subcategories: [
-      { label: 'Аренда', href: '/?category=auto&subcategory=rent' },
-      { label: 'Продажа', href: '/?category=auto&subcategory=sale' },
+      { label: 'Аренда', href: '/?category=auto&subcategory=Аренда' },
+      { label: 'Продажа', href: '/?category=auto&subcategory=Продажа' },
     ]
   },
 ];
