@@ -31,15 +31,15 @@ export function ListingCard({ listing }: ListingCardProps) {
       className="w-full hover:scale-[1.02] transition-transform"
     >
       <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-        {listing.images && listing.images.length > 0 && (
-          <Image
-            alt={listing.title}
-            className="object-cover rounded-xl w-full"
-            src={listing.images[0]}
-            width="100%"
-            height={200}
-          />
-        )}
+        <div className="w-full aspect-[16/9] overflow-hidden rounded-xl">
+          {listing.images && listing.images.length > 0 && (
+            <Image
+              alt={listing.title}
+              className="object-cover w-full h-full"
+              src={listing.images[0]}
+            />
+          )}
+        </div>
       </CardHeader>
       <CardBody className="overflow-visible py-2 px-4">
         <div className="flex justify-between items-start mb-2">
