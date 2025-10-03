@@ -37,7 +37,14 @@ const menuItems = [
   { label: 'Работа', href: '/?category=job', category: 'job' },
   { label: 'Услуги', href: '/?category=service', category: 'service' },
   { label: 'Товары', href: '/?category=goods', category: 'goods' },
-  { label: 'Аренда авто', href: '/?category=car_rental', category: 'car_rental' },
+  {
+    label: 'Авто',
+    category: 'auto',
+    subcategories: [
+      { label: 'Аренда', href: '/?category=auto&subcategory=rent' },
+      { label: 'Продажа', href: '/?category=auto&subcategory=sale' },
+    ]
+  },
 ];
 
 export const Navbar = () => {

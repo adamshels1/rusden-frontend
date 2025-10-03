@@ -23,7 +23,13 @@ export function FiltersBar({ filters, onFiltersChange }: FiltersBarProps) {
   // Загружаем подкатегории когда меняется категория
   useEffect(() => {
     if (filters.category) {
-      getSubcategories(filters.category).then(setSubcategories).catch(console.error);
+      // Для realty и auto показываем стандартные подкатегории
+      if (filters.category === 'realty' || filters.category === 'auto') {
+        setSubcategories(['rent', 'sale']);
+      } else {
+        // Для остальных загружаем из API
+        getSubcategories(filters.category).then(setSubcategories).catch(console.error);
+      }
     } else {
       setSubcategories([]);
     }
@@ -31,6 +37,15 @@ export function FiltersBar({ filters, onFiltersChange }: FiltersBarProps) {
 
   const handleSubcategoryChange = (value: string) => {
     onFiltersChange({ ...filters, subcategory: value || undefined });
+  };
+
+  // Переводим подкатегории на русский для отображения
+  const getSubcategoryLabel = (sub: string) => {
+    const labels: Record<string, string> = {
+      'rent': 'Аренда',
+      'sale': 'Продажа',
+    };
+    return labels[sub] || sub;
   };
 
   const handleLocationChange = (value: string) => {
