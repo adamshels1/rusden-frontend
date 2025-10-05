@@ -15,7 +15,11 @@ import { ru } from 'date-fns/locale';
 import { FiArrowLeft, FiMapPin, FiCalendar } from 'react-icons/fi';
 import { FaTelegram, FaWhatsapp } from 'react-icons/fa';
 import Lightbox from 'yet-another-react-lightbox';
+import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
+import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import 'yet-another-react-lightbox/styles.css';
+import 'yet-another-react-lightbox/plugins/thumbnails.css';
 
 export default function ListingDetailPage() {
   const params = useParams();
@@ -236,6 +240,11 @@ export default function ListingDetailPage() {
           close={() => setLightboxOpen(false)}
           index={lightboxIndex}
           slides={listing.images.map((image) => ({ src: image }))}
+          plugins={[Zoom, Fullscreen, Thumbnails]}
+          zoom={{
+            maxZoomPixelRatio: 3,
+            scrollToZoom: true,
+          }}
         />
       )}
     </section>
