@@ -124,10 +124,31 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent className="basis-1/5 sm:basis-full" justify="end">
+        <NavbarItem className="hidden sm:flex">
+          <Button
+            as={Link}
+            color="primary"
+            href="/add-listing"
+            variant="flat"
+            size="sm"
+          >
+            Подать объявление
+          </Button>
+        </NavbarItem>
         <ThemeSwitch />
       </NavbarContent>
 
       <NavbarMenu>
+        <NavbarMenuItem>
+          <Link
+            className="w-full"
+            color="primary"
+            href="/add-listing"
+            size="lg"
+          >
+            Подать объявление
+          </Link>
+        </NavbarMenuItem>
         {menuItems.map((item, index) => {
           if (item.subcategories) {
             return (
