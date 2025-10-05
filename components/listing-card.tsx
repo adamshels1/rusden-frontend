@@ -3,17 +3,19 @@
 import { Card, CardHeader, CardBody, CardFooter } from '@heroui/card';
 import { Image } from '@heroui/image';
 import { Chip } from '@heroui/chip';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import type { Listing } from '@/types/listing';
 import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
 
 interface ListingCardProps {
   listing: Listing;
+  currentPage?: number;
 }
 
-export function ListingCard({ listing }: ListingCardProps) {
+export function ListingCard({ listing, currentPage }: ListingCardProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const formattedDate = formatDistanceToNow(new Date(listing.posted_date), {
     addSuffix: true,
@@ -21,6 +23,15 @@ export function ListingCard({ listing }: ListingCardProps) {
   });
 
   const handleClick = () => {
+    // Сохраняем текущие параметры URL для возврата назад
+    const params = new URLSearchParams(searchParams.toString());
+    if (currentPage && currentPage > 1) {
+      params.set('page', currentPage.toString());
+    }
+
+    // Сохраняем параметры в sessionStorage для возврата
+    sessionStorage.setItem('lastListingParams', params.toString());
+
     router.push(`/listing/${listing.id}`);
   };
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Spinner } from '@heroui/spinner';
 import { Pagination } from '@heroui/pagination';
 import { ListingCard } from '@/components/listing-card';
@@ -14,6 +14,7 @@ const LISTINGS_PER_PAGE = 12;
 
 export default function Home() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -21,16 +22,27 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [totalListings, setTotalListings] = useState(0);
 
-  // Читаем категорию и подкатегорию из URL
+  // Читаем категорию, подкатегорию и страницу из URL
   useEffect(() => {
     const category = searchParams.get('category');
     const subcategory = searchParams.get('subcategory');
+    const pageParam = searchParams.get('page');
     const newFilters: ListingFilters = {};
 
     if (category) newFilters.category = category;
     if (subcategory) newFilters.subcategory = subcategory;
 
     setFilters(newFilters);
+
+    // Устанавливаем страницу из URL
+    if (pageParam) {
+      const pageNumber = parseInt(pageParam, 10);
+      if (!isNaN(pageNumber) && pageNumber > 0) {
+        setPage(pageNumber);
+      }
+    } else {
+      setPage(1);
+    }
   }, [searchParams]);
 
   useEffect(() => {
@@ -62,6 +74,19 @@ export default function Home() {
 
   const totalPages = Math.ceil(totalListings / LISTINGS_PER_PAGE);
 
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+
+    // Обновляем URL с новым номером страницы
+    const params = new URLSearchParams(searchParams.toString());
+    if (newPage > 1) {
+      params.set('page', newPage.toString());
+    } else {
+      params.delete('page');
+    }
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
   return (
     <section className="flex flex-col gap-6 py-8 md:py-10 px-4 md:px-6 max-w-7xl mx-auto">
       <div className="flex flex-col gap-4">
@@ -84,7 +109,7 @@ export default function Home() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {listings.map((listing) => (
-              <ListingCard key={listing.id} listing={listing} />
+              <ListingCard key={listing.id} listing={listing} currentPage={page} />
             ))}
           </div>
           {listings.length === 0 && (
@@ -97,7 +122,7 @@ export default function Home() {
               <Pagination
                 total={totalPages}
                 page={page}
-                onChange={setPage}
+                onChange={handlePageChange}
               />
             </div>
           )}
