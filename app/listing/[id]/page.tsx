@@ -14,6 +14,8 @@ import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { FiArrowLeft, FiMapPin, FiCalendar } from 'react-icons/fi';
 import { FaTelegram, FaWhatsapp } from 'react-icons/fa';
+import Lightbox from 'yet-another-react-lightbox';
+import 'yet-another-react-lightbox/styles.css';
 
 export default function ListingDetailPage() {
   const params = useParams();
@@ -21,6 +23,8 @@ export default function ListingDetailPage() {
   const [listing, setListing] = useState<Listing | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const categoryLabels: Record<string, string> = {
     realty: 'Недвижимость',
@@ -146,7 +150,13 @@ export default function ListingDetailPage() {
             {/* Left column for images */}
             <div className="md:w-1/2">
               <div className="flex flex-col gap-4">
-                <div className="w-full aspect-[4/3] overflow-hidden rounded-xl bg-default-100 flex items-center justify-center">
+                <div
+                  className="w-full aspect-[4/3] overflow-hidden rounded-xl bg-default-100 flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                  onClick={() => {
+                    setLightboxIndex(selectedImage);
+                    setLightboxOpen(true);
+                  }}
+                >
                   <Image
                     src={listing.images && listing.images.length > 0 ? listing.images[selectedImage] : '/no-image.jpg'}
                     alt={listing.title}
@@ -219,6 +229,15 @@ export default function ListingDetailPage() {
           </div>
         </CardBody>
       </Card>
+
+      {listing.images && listing.images.length > 0 && (
+        <Lightbox
+          open={lightboxOpen}
+          close={() => setLightboxOpen(false)}
+          index={lightboxIndex}
+          slides={listing.images.map((image) => ({ src: image }))}
+        />
+      )}
     </section>
   );
 }
