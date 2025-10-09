@@ -1,11 +1,12 @@
-'use client';
+"use client";
 
-import { Select, SelectItem } from '@heroui/select';
-import { Autocomplete, AutocompleteItem } from '@heroui/autocomplete';
-import { Input } from '@heroui/input';
-import { useEffect, useState } from 'react';
-import { getCategories, getCities, getSubcategories } from '@/lib/api';
-import type { ListingFilters } from '@/types/listing';
+import type { ListingFilters } from "@/types/listing";
+
+import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
+import { Input } from "@heroui/input";
+import { useEffect, useState } from "react";
+
+import { getCities, getSubcategories } from "@/lib/api";
 
 interface FiltersBarProps {
   filters: ListingFilters;
@@ -24,11 +25,13 @@ export function FiltersBar({ filters, onFiltersChange }: FiltersBarProps) {
   useEffect(() => {
     if (filters.category) {
       // Для realty и auto показываем стандартные подкатегории
-      if (filters.category === 'realty' || filters.category === 'auto') {
-        setSubcategories(['Аренда', 'Продажа']);
+      if (filters.category === "realty" || filters.category === "auto") {
+        setSubcategories(["Аренда", "Продажа"]);
       } else {
         // Для остальных загружаем из API
-        getSubcategories(filters.category).then(setSubcategories).catch(console.error);
+        getSubcategories(filters.category)
+          .then(setSubcategories)
+          .catch(console.error);
       }
     } else {
       setSubcategories([]);
@@ -42,11 +45,12 @@ export function FiltersBar({ filters, onFiltersChange }: FiltersBarProps) {
   // Переводим подкатегории на русский для отображения
   const getSubcategoryLabel = (sub: string) => {
     const labels: Record<string, string> = {
-      'rent': 'Аренда',
-      'sale': 'Продажа',
-      'Аренда': 'Аренда',
-      'Продажа': 'Продажа',
+      rent: "Аренда",
+      sale: "Продажа",
+      Аренда: "Аренда",
+      Продажа: "Продажа",
     };
+
     return labels[sub] || sub;
   };
 
@@ -56,11 +60,13 @@ export function FiltersBar({ filters, onFiltersChange }: FiltersBarProps) {
 
   const handleMinPriceChange = (value: string) => {
     const num = parseInt(value);
+
     onFiltersChange({ ...filters, minPrice: isNaN(num) ? undefined : num });
   };
 
   const handleMaxPriceChange = (value: string) => {
     const num = parseInt(value);
+
     onFiltersChange({ ...filters, maxPrice: isNaN(num) ? undefined : num });
   };
 
@@ -68,17 +74,17 @@ export function FiltersBar({ filters, onFiltersChange }: FiltersBarProps) {
     <div className="flex flex-col md:flex-row gap-4 w-full">
       {subcategories.length > 0 && (
         <Autocomplete
+          allowsCustomValue
+          className="w-full md:w-1/4"
           label="Тип"
           placeholder="Выберите тип"
           selectedKey={filters.subcategory || null}
           onSelectionChange={(key) => {
-            handleSubcategoryChange(key as string || '');
+            handleSubcategoryChange((key as string) || "");
           }}
-          className="w-full md:w-1/4"
-          allowsCustomValue
         >
           {subcategories.map((sub) => (
-            <AutocompleteItem key={sub} value={sub}>
+            <AutocompleteItem key={sub}>
               {sub}
             </AutocompleteItem>
           ))}
@@ -86,38 +92,38 @@ export function FiltersBar({ filters, onFiltersChange }: FiltersBarProps) {
       )}
 
       <Autocomplete
+        allowsCustomValue
+        className="w-full md:w-1/4"
         label="Город"
         placeholder="Выберите город"
         selectedKey={filters.location || null}
         onSelectionChange={(key) => {
-          handleLocationChange(key as string || '');
+          handleLocationChange((key as string) || "");
         }}
-        className="w-full md:w-1/4"
-        allowsCustomValue
       >
         {cities.map((city) => (
-          <AutocompleteItem key={city} value={city}>
+          <AutocompleteItem key={city}>
             {city}
           </AutocompleteItem>
         ))}
       </Autocomplete>
 
       <Input
-        type="number"
+        className="w-full md:w-1/4"
         label="Цена от"
         placeholder="0"
-        value={filters.minPrice?.toString() || ''}
+        type="number"
+        value={filters.minPrice?.toString() || ""}
         onValueChange={handleMinPriceChange}
-        className="w-full md:w-1/4"
       />
 
       <Input
-        type="number"
+        className="w-full md:w-1/4"
         label="Цена до"
         placeholder="∞"
-        value={filters.maxPrice?.toString() || ''}
+        type="number"
+        value={filters.maxPrice?.toString() || ""}
         onValueChange={handleMaxPriceChange}
-        className="w-full md:w-1/4"
       />
     </div>
   );

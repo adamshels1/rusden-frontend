@@ -1,14 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { Spinner } from '@heroui/spinner';
-import { Pagination } from '@heroui/pagination';
-import { ListingCard } from '@/components/listing-card';
-import { SearchBar } from '@/components/search-bar';
-import { FiltersBar } from '@/components/filters-bar';
-import { getListings } from '@/lib/api';
-import type { Listing, ListingFilters } from '@/types/listing';
+import type { Listing, ListingFilters } from "@/types/listing";
+
+import { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Spinner } from "@heroui/spinner";
+import { Pagination } from "@heroui/pagination";
+
+import { ListingCard } from "@/components/listing-card";
+import { SearchBar } from "@/components/search-bar";
+import { FiltersBar } from "@/components/filters-bar";
+import { getListings } from "@/lib/api";
 
 const LISTINGS_PER_PAGE = 12;
 
@@ -17,16 +19,16 @@ export default function Home() {
   const router = useRouter();
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<ListingFilters>({});
   const [page, setPage] = useState(1);
   const [totalListings, setTotalListings] = useState(0);
 
   // Читаем категорию, подкатегорию и страницу из URL
   useEffect(() => {
-    const category = searchParams.get('category');
-    const subcategory = searchParams.get('subcategory');
-    const pageParam = searchParams.get('page');
+    const category = searchParams.get("category");
+    const subcategory = searchParams.get("subcategory");
+    const pageParam = searchParams.get("page");
     const newFilters: ListingFilters = {};
 
     if (category) newFilters.category = category;
@@ -37,6 +39,7 @@ export default function Home() {
     // Устанавливаем страницу из URL
     if (pageParam) {
       const pageNumber = parseInt(pageParam, 10);
+
       if (!isNaN(pageNumber) && pageNumber > 0) {
         setPage(pageNumber);
       }
@@ -56,10 +59,11 @@ export default function Home() {
           limit: LISTINGS_PER_PAGE,
           offset,
         });
+
         setListings(response.data);
         setTotalListings(response.meta.total);
       } catch (error) {
-        console.error('Error fetching listings:', error);
+        console.error("Error fetching listings:", error);
       } finally {
         setLoading(false);
       }
@@ -79,10 +83,11 @@ export default function Home() {
 
     // Обновляем URL с новым номером страницы
     const params = new URLSearchParams(searchParams.toString());
+
     if (newPage > 1) {
-      params.set('page', newPage.toString());
+      params.set("page", newPage.toString());
     } else {
-      params.delete('page');
+      params.delete("page");
     }
     router.push(`?${params.toString()}`, { scroll: false });
   };
@@ -91,7 +96,9 @@ export default function Home() {
     <section className="flex flex-col gap-6 py-8 md:py-10 px-4 md:px-6 max-w-7xl mx-auto">
       <div className="flex flex-col gap-4">
         <h1 className="text-4xl font-bold">Rusden</h1>
-        <p className="text-default-500">Объявления для русскоязычных в Турции</p>
+        <p className="text-default-500">
+          Объявления для русскоязычных в Турции
+        </p>
       </div>
 
       <SearchBar value={search} onChange={setSearch} />
@@ -109,7 +116,11 @@ export default function Home() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {listings.map((listing) => (
-              <ListingCard key={listing.id} listing={listing} currentPage={page} />
+              <ListingCard
+                key={listing.id}
+                currentPage={page}
+                listing={listing}
+              />
             ))}
           </div>
           {listings.length === 0 && (
@@ -120,8 +131,8 @@ export default function Home() {
           {totalPages > 1 && (
             <div className="flex justify-center mt-6">
               <Pagination
-                total={totalPages}
                 page={page}
+                total={totalPages}
                 onChange={handlePageChange}
               />
             </div>

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useSearchParams, usePathname } from 'next/navigation';
+import { useState } from "react";
+import { useSearchParams, usePathname } from "next/navigation";
 import {
   Navbar as HeroUINavbar,
   NavbarContent,
@@ -21,29 +21,30 @@ import { Button } from "@heroui/button";
 import { FiChevronDown } from "react-icons/fi";
 import { Link } from "@heroui/link";
 import NextLink from "next/link";
+
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/icons";
 
 const menuItems = [
-  { label: 'Все', href: '/', category: null },
+  { label: "Все", href: "/", category: null },
   {
-    label: 'Недвижимость',
-    category: 'realty',
+    label: "Недвижимость",
+    category: "realty",
     subcategories: [
-      { label: 'Продажа', href: '/?category=realty&subcategory=Продажа' },
-      { label: 'Аренда', href: '/?category=realty&subcategory=Аренда' },
-    ]
+      { label: "Продажа", href: "/?category=realty&subcategory=Продажа" },
+      { label: "Аренда", href: "/?category=realty&subcategory=Аренда" },
+    ],
   },
-  { label: 'Работа', href: '/?category=job', category: 'job' },
-  { label: 'Услуги', href: '/?category=service', category: 'service' },
-  { label: 'Товары', href: '/?category=goods', category: 'goods' },
+  { label: "Работа", href: "/?category=job", category: "job" },
+  { label: "Услуги", href: "/?category=service", category: "service" },
+  { label: "Товары", href: "/?category=goods", category: "goods" },
   {
-    label: 'Авто',
-    category: 'auto',
+    label: "Авто",
+    category: "auto",
     subcategories: [
-      { label: 'Аренда', href: '/?category=auto&subcategory=Аренда' },
-      { label: 'Продажа', href: '/?category=auto&subcategory=Продажа' },
-    ]
+      { label: "Аренда", href: "/?category=auto&subcategory=Аренда" },
+      { label: "Продажа", href: "/?category=auto&subcategory=Продажа" },
+    ],
   },
 ];
 
@@ -51,10 +52,11 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const currentCategory = searchParams.get('category');
+  const currentCategory = searchParams.get("category");
 
   const isActive = (category: string | null) => {
-    if (pathname !== '/') return false;
+    if (pathname !== "/") return false;
+
     return currentCategory === category;
   };
 
@@ -77,7 +79,10 @@ export const Navbar = () => {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex basis-1/5 sm:basis-full" justify="center">
+      <NavbarContent
+        className="hidden sm:flex basis-1/5 sm:basis-full"
+        justify="center"
+      >
         {menuItems.map((item) => {
           if (item.subcategories) {
             return (
@@ -89,10 +94,12 @@ export const Navbar = () => {
                       className="p-0 bg-transparent data-[hover=true]:bg-transparent h-auto min-h-0"
                       endContent={<FiChevronDown className="text-small" />}
                       radius="sm"
-                      variant="light"
                       size="sm"
+                      variant="light"
                     >
-                      <span className={`text-sm ${isActive(item.category) ? "text-primary" : "text-foreground"}`}>
+                      <span
+                        className={`text-sm ${isActive(item.category) ? "text-primary" : "text-foreground"}`}
+                      >
                         {item.label}
                       </span>
                     </Button>
@@ -129,8 +136,8 @@ export const Navbar = () => {
             as={Link}
             color="primary"
             href="/add-listing"
-            variant="flat"
             size="sm"
+            variant="flat"
           >
             Подать объявление
           </Button>
@@ -152,14 +159,22 @@ export const Navbar = () => {
         {menuItems.map((item, index) => {
           if (item.subcategories) {
             return (
-              <div key={`${item.category}-${index}`} className="flex flex-col gap-2">
+              <div
+                key={`${item.category}-${index}`}
+                className="flex flex-col gap-2"
+              >
                 <NavbarMenuItem isActive={isActive(item.category)}>
-                  <p className={`text-lg font-semibold ${isActive(item.category) ? "text-primary" : "text-foreground"}`}>
+                  <p
+                    className={`text-lg font-semibold ${isActive(item.category) ? "text-primary" : "text-foreground"}`}
+                  >
                     {item.label}
                   </p>
                 </NavbarMenuItem>
                 {item.subcategories.map((sub, subIndex) => (
-                  <NavbarMenuItem key={`${sub.href}-${subIndex}`} className="pl-4">
+                  <NavbarMenuItem
+                    key={`${sub.href}-${subIndex}`}
+                    className="pl-4"
+                  >
                     <Link
                       className="w-full"
                       color="foreground"
@@ -175,7 +190,10 @@ export const Navbar = () => {
           }
 
           return (
-            <NavbarMenuItem key={`${item.href}-${index}`} isActive={isActive(item.category)}>
+            <NavbarMenuItem
+              key={`${item.href}-${index}`}
+              isActive={isActive(item.category)}
+            >
               <Link
                 className="w-full"
                 color={isActive(item.category) ? "primary" : "foreground"}

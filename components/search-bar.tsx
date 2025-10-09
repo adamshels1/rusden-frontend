@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { Input } from '@heroui/input';
-import { FiSearch } from 'react-icons/fi';
+import { Input } from "@heroui/input";
+import { FiSearch } from "react-icons/fi";
 
 interface SearchBarProps {
   value: string;
@@ -9,22 +9,26 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-export function SearchBar({ value, onChange, placeholder = 'Поиск объявлений...' }: SearchBarProps) {
+export function SearchBar({
+  value,
+  onChange,
+  placeholder = "Поиск объявлений...",
+}: SearchBarProps) {
   return (
     <Input
       isClearable
-      placeholder={placeholder}
-      value={value}
-      onValueChange={onChange}
-      startContent={<FiSearch className="text-default-400" />}
       classNames={{
-        base: 'w-full',
+        base: "w-full",
         inputWrapper: [
-          'bg-default-100',
-          'hover:bg-default-200',
-          'group-data-[focused=true]:bg-default-100',
+          "bg-default-100",
+          "hover:bg-default-200",
+          "group-data-[focused=true]:bg-default-100",
         ],
       }}
+      placeholder={placeholder}
+      startContent={<FiSearch className="text-default-400" />}
+      value={value}
+      onValueChange={onChange}
     />
   );
 }

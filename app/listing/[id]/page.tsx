@@ -1,25 +1,27 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { Card, CardBody, CardHeader } from '@heroui/card';
-import { Image } from '@heroui/image';
-import { Chip } from '@heroui/chip';
-import { Button } from '@heroui/button';
-import { Spinner } from '@heroui/spinner';
-import { Divider } from '@heroui/divider';
-import { getListing } from '@/lib/api';
-import type { Listing } from '@/types/listing';
-import { formatDistanceToNow } from 'date-fns';
-import { ru } from 'date-fns/locale';
-import { FiArrowLeft, FiMapPin, FiCalendar } from 'react-icons/fi';
-import { FaTelegram, FaWhatsapp } from 'react-icons/fa';
-import Lightbox from 'yet-another-react-lightbox';
-import Zoom from 'yet-another-react-lightbox/plugins/zoom';
-import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
-import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
-import 'yet-another-react-lightbox/styles.css';
-import 'yet-another-react-lightbox/plugins/thumbnails.css';
+import type { Listing } from "@/types/listing";
+
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Image } from "@heroui/image";
+import { Chip } from "@heroui/chip";
+import { Button } from "@heroui/button";
+import { Spinner } from "@heroui/spinner";
+import { Divider } from "@heroui/divider";
+import { formatDistanceToNow } from "date-fns";
+import { ru } from "date-fns/locale";
+import { FiArrowLeft, FiMapPin, FiCalendar } from "react-icons/fi";
+import { FaTelegram, FaWhatsapp } from "react-icons/fa";
+import Lightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+
+import { getListing } from "@/lib/api";
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
 
 export default function ListingDetailPage() {
   const params = useParams();
@@ -31,27 +33,28 @@ export default function ListingDetailPage() {
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const categoryLabels: Record<string, string> = {
-    realty: 'Недвижимость',
-    job: 'Работа',
-    service: 'Услуги',
-    goods: 'Товары',
-    auto: 'Авто',
-    event: 'Мероприятия',
+    realty: "Недвижимость",
+    job: "Работа",
+    service: "Услуги",
+    goods: "Товары",
+    auto: "Авто",
+    event: "Мероприятия",
   };
 
   const subcategoryLabels: Record<string, string> = {
-    rent: 'Аренда',
-    sale: 'Продажа',
-    'Аренда': 'Аренда',
-    'Продажа': 'Продажа',
+    rent: "Аренда",
+    sale: "Продажа",
+    Аренда: "Аренда",
+    Продажа: "Продажа",
   };
 
   const handleCategoryClick = () => {
     if (!listing) return;
     const params = new URLSearchParams();
-    params.append('category', listing.category);
+
+    params.append("category", listing.category);
     if (listing.subcategory) {
-      params.append('subcategory', listing.subcategory);
+      params.append("subcategory", listing.subcategory);
     }
     router.push(`/?${params.toString()}`);
   };
@@ -60,9 +63,10 @@ export default function ListingDetailPage() {
     const fetchListing = async () => {
       try {
         const data = await getListing(params.id as string);
+
         setListing(data);
       } catch (error) {
-        console.error('Error fetching listing:', error);
+        console.error("Error fetching listing:", error);
         setListing(null);
       } finally {
         setLoading(false);
@@ -84,7 +88,7 @@ export default function ListingDetailPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
         <p className="text-default-500">Объявление не найдено</p>
-        <Button color="primary" onPress={() => router.push('/')}>
+        <Button color="primary" onPress={() => router.push("/")}>
           На главную
         </Button>
       </div>
@@ -99,10 +103,10 @@ export default function ListingDetailPage() {
   return (
     <section className="flex flex-col gap-6 py-8 md:py-10 px-4 md:px-6 max-w-5xl mx-auto">
       <Button
+        className="w-fit"
         startContent={<FiArrowLeft />}
         variant="light"
         onPress={() => router.back()}
-        className="w-fit"
       >
         Назад
       </Button>
@@ -112,26 +116,31 @@ export default function ListingDetailPage() {
           <div className="flex justify-between w-full items-start">
             <h1 className="text-3xl font-bold">{listing.title}</h1>
             {listing.price && listing.currency && (
-              <Chip color="primary" size="lg" variant="flat" className="text-xl font-bold">
-                {listing.price.toLocaleString('ru-RU')} {listing.currency}
+              <Chip
+                className="text-xl font-bold"
+                color="primary"
+                size="lg"
+                variant="flat"
+              >
+                {listing.price.toLocaleString("ru-RU")} {listing.currency}
               </Chip>
             )}
           </div>
           <div className="flex flex-wrap gap-2">
             <Chip
-              size="sm"
-              color="primary"
-              onClick={handleCategoryClick}
               className="cursor-pointer hover:opacity-80"
+              color="primary"
+              size="sm"
+              onClick={handleCategoryClick}
             >
               {categoryLabels[listing.category] || listing.category}
             </Chip>
             {listing.subcategory && (
               <Chip
-                size="sm"
-                color="secondary"
-                onClick={handleCategoryClick}
                 className="cursor-pointer hover:opacity-80"
+                color="secondary"
+                size="sm"
+                onClick={handleCategoryClick}
               >
                 {subcategoryLabels[listing.subcategory] || listing.subcategory}
               </Chip>
@@ -162,9 +171,13 @@ export default function ListingDetailPage() {
                   }}
                 >
                   <Image
-                    src={listing.images && listing.images.length > 0 ? listing.images[selectedImage] : '/no-image.jpg'}
                     alt={listing.title}
                     className="w-full h-full object-cover"
+                    src={
+                      listing.images && listing.images.length > 0
+                        ? listing.images[selectedImage]
+                        : "/no-image.jpg"
+                    }
                   />
                 </div>
                 {listing.images && listing.images.length > 1 && (
@@ -172,11 +185,11 @@ export default function ListingDetailPage() {
                     {listing.images.map((image, index) => (
                       <Image
                         key={index}
-                        src={image}
                         alt={`${listing.title} ${index + 1}`}
                         className={`w-20 h-20 object-cover rounded-lg cursor-pointer ${
-                          selectedImage === index ? 'ring-2 ring-primary' : ''
+                          selectedImage === index ? "ring-2 ring-primary" : ""
                         }`}
+                        src={image}
                         onClick={() => setSelectedImage(index)}
                       />
                     ))}
@@ -189,31 +202,34 @@ export default function ListingDetailPage() {
             <div className="md:w-1/2 flex flex-col gap-6">
               <div>
                 <h2 className="text-xl font-semibold mb-2">Описание</h2>
-                <p className="text-default-700 whitespace-pre-wrap">{listing.description}</p>
+                <p className="text-default-700 whitespace-pre-wrap">
+                  {listing.description}
+                </p>
               </div>
 
-              {(listing.contact_info?.phone || listing.contact_info?.telegram) && (
+              {(listing.contact_info?.phone ||
+                listing.contact_info?.telegram) && (
                 <div>
                   <h2 className="text-xl font-semibold mb-2">Контакты</h2>
                   <div className="flex flex-col gap-2">
                     {listing.contact_info.phone && (
                       <Button
-                        startContent={<FaWhatsapp />}
                         as="a"
-                        href={`https://wa.me/${listing.contact_info.phone.replace(/[^0-9]/g, '')}`}
-                        target="_blank"
                         className="w-full sm:w-auto bg-[#25D366] text-white hover:bg-[#20BA5A]"
+                        href={`https://wa.me/${listing.contact_info.phone.replace(/[^0-9]/g, "")}`}
+                        startContent={<FaWhatsapp />}
+                        target="_blank"
                       >
                         {listing.contact_info.phone}
                       </Button>
                     )}
                     {listing.contact_info.telegram && (
                       <Button
-                        startContent={<FaTelegram />}
                         as="a"
-                        href={`https://t.me/${listing.contact_info.telegram.replace('@', '')}`}
-                        target="_blank"
                         className="w-full sm:w-auto bg-[#0088cc] text-white hover:bg-[#006699]"
+                        href={`https://t.me/${listing.contact_info.telegram.replace("@", "")}`}
+                        startContent={<FaTelegram />}
+                        target="_blank"
                       >
                         {listing.contact_info.telegram}
                       </Button>
@@ -226,7 +242,10 @@ export default function ListingDetailPage() {
 
               <div className="flex flex-col gap-2 text-small text-default-500">
                 {listing.ai_confidence && (
-                  <p>Точность категоризации: {Math.round(listing.ai_confidence * 100)}%</p>
+                  <p>
+                    Точность категоризации:{" "}
+                    {Math.round(listing.ai_confidence * 100)}%
+                  </p>
                 )}
               </div>
             </div>
@@ -236,11 +255,11 @@ export default function ListingDetailPage() {
 
       {listing.images && listing.images.length > 0 && (
         <Lightbox
-          open={lightboxOpen}
           close={() => setLightboxOpen(false)}
           index={lightboxIndex}
-          slides={listing.images.map((image) => ({ src: image }))}
+          open={lightboxOpen}
           plugins={[Zoom, Fullscreen, Thumbnails]}
+          slides={listing.images.map((image) => ({ src: image }))}
           zoom={{
             maxZoomPixelRatio: 3,
             scrollToZoom: true,

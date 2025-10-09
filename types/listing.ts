@@ -11,6 +11,7 @@ export interface Listing {
   price: number | null;
   currency: string | null;
   category: string;
+  subcategory?: string | null;
   location: string | null;
   contact_info: ContactInfo;
   images: string[] | null;
@@ -31,6 +32,7 @@ export interface ListingsResponse {
 
 export interface ListingFilters {
   category?: string;
+  subcategory?: string;
   location?: string;
   minPrice?: number;
   maxPrice?: number;
