@@ -1,14 +1,14 @@
 "use client";
 
 import { Suspense } from "react";
-import HomePage from "./home-page";
+import HomePage from "./page";
 import { Spinner } from "@heroui/spinner";
 
-export default function Page() {
+export default function PageWrapper() {
   return (
     <Suspense
       fallback={
-        <div className="flex justify-center items-center min-h-96">
+        <div className="flex justify-center items-center min-h-screen">
           <Spinner size="lg" />
         </div>
       }
