@@ -2,11 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Card, CardBody, CardHeader } from '@heroui/card';
+import { Card, CardBody } from '@heroui/card';
 import { Input, Textarea } from '@heroui/input';
 import { Button } from '@heroui/button';
 import { Select, SelectItem } from '@heroui/select';
-import { Spinner } from '@heroui/spinner';
 import { FiUpload, FiX } from 'react-icons/fi';
 
 const CATEGORIES = [
@@ -184,7 +183,7 @@ export default function AddListingPage() {
                 required
               >
                 {CATEGORIES.map((cat) => (
-                  <SelectItem key={cat.value} value={cat.value}>
+                  <SelectItem key={cat.value}>
                     {cat.label}
                   </SelectItem>
                 ))}
@@ -198,7 +197,7 @@ export default function AddListingPage() {
                   onChange={(e) => setFormData({ ...formData, subcategory: e.target.value })}
                 >
                   {SUBCATEGORIES[formData.category].map((sub) => (
-                    <SelectItem key={sub} value={sub}>
+                    <SelectItem key={sub}>
                       {sub}
                     </SelectItem>
                   ))}
@@ -222,7 +221,7 @@ export default function AddListingPage() {
                 isDisabled={!formData.price}
               >
                 {CURRENCIES.map((curr) => (
-                  <SelectItem key={curr.value} value={curr.value}>
+                  <SelectItem key={curr.value}>
                     {curr.label}
                   </SelectItem>
                 ))}
@@ -236,7 +235,7 @@ export default function AddListingPage() {
               onChange={(e) => setFormData({ ...formData, location: e.target.value })}
             >
               {CITIES.map((city) => (
-                <SelectItem key={city} value={city}>
+                <SelectItem key={city}>
                   {city}
                 </SelectItem>
               ))}
