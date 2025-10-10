@@ -1,47 +1,38 @@
 const createNextIntlPlugin = require('next-intl/plugin');
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   trailingSlash: false,
 
   // Images optimization
   images: {
-    domains: [
-      'rusden.com',
-      'cdn.rusden.com',
-      'images.unsplash.com',
-      'localhost',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'rusden.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.rusden.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+      },
     ],
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
     unoptimized: process.env.NODE_ENV === 'development',
-  },
-
-  // Internationalization
-  i18n: {
-    locales: ['ru', 'tr', 'en'],
-    defaultLocale: 'ru',
-    localeDetection: true,
-    domains: [
-      {
-        domain: 'rusden.com',
-        defaultLocale: 'ru',
-      },
-      {
-        domain: 'rusden.com.tr',
-        defaultLocale: 'tr',
-      },
-      {
-        domain: 'rusden.net',
-        defaultLocale: 'en',
-      },
-    ],
   },
 
   // Redirects

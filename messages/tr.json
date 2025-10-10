@@ -1,0 +1,55 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "real_estate": "Emlak",
+    "rent": "Kiralık",
+    "sale": "Satılık",
+    "jobs": "İş",
+    "services": "Hizmetler",
+    "goods": "Ürünler",
+    "blog": "Blog",
+    "about": "Hakkımızda",
+    "contacts": "İletişim"
+  },
+  "realestate": {
+    "title": "Türkiye'de Emlak",
+    "apartments": "Daireler",
+    "villas": "Villalar",
+    "houses": "Evler",
+    "land": "Arsa",
+    "commercial": "Ticari",
+    "price": "Fiyat",
+    "rooms": "Oda",
+    "area": "Alan",
+    "location": "Konum",
+    "description": "Açıklama"
+  },
+  "jobs": {
+    "title": "Türkiye'de İş",
+    "full_time": "Tam Zamanlı",
+    "part_time": "Yarı Zamanlı",
+    "salary": "Maaş",
+    "company": "Şirket",
+    "requirements": "Gereksinimler"
+  },
+  "common": {
+    "search": "Ara",
+    "filter": "Filtre",
+    "sort": "Sırala",
+    "save": "Kaydet",
+    "share": "Paylaş",
+    "contact": "İletişim",
+    "view_more": "Daha fazla göster",
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "not_found": "Bulunamadı"
+  },
+  "seo": {
+    "default_title": "Rusden - Türkiye İlanları",
+    "default_description": "Türkiye'deki Rusça konuşanlar için ilan platformu. Emlak, iş, hizmetler ve ürünler.",
+    "realestate_title": "Türkiye'de Emlak - satılık, kiralık daire, villa, ev",
+    "realestate_description": "🏡 Türkiye'de geniş emlak seçeneği. İstanbul, Antalya, Bodrum'da daireler, villalar, evler. Sahiplerinden ve ajanslardan doğrulanmış ilanlar.",
+    "jobs_title": "Türkiye'de Rusça konuşanlar için iş",
+    "jobs_description": "💼 Türkiye'de Rusça konuşan profesyoneller için güncel iş fırsatları. İstanbul, Antalya ve diğer şehirlerde iş."
+  }
+}

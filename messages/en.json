@@ -1,0 +1,55 @@
+{
+  "nav": {
+    "home": "Home",
+    "real_estate": "Real Estate",
+    "rent": "For Rent",
+    "sale": "For Sale",
+    "jobs": "Jobs",
+    "services": "Services",
+    "goods": "Goods",
+    "blog": "Blog",
+    "about": "About",
+    "contacts": "Contacts"
+  },
+  "realestate": {
+    "title": "Real Estate in Turkey",
+    "apartments": "Apartments",
+    "villas": "Villas",
+    "houses": "Houses",
+    "land": "Land",
+    "commercial": "Commercial",
+    "price": "Price",
+    "rooms": "Rooms",
+    "area": "Area",
+    "location": "Location",
+    "description": "Description"
+  },
+  "jobs": {
+    "title": "Jobs in Turkey",
+    "full_time": "Full Time",
+    "part_time": "Part Time",
+    "salary": "Salary",
+    "company": "Company",
+    "requirements": "Requirements"
+  },
+  "common": {
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "save": "Save",
+    "share": "Share",
+    "contact": "Contact",
+    "view_more": "View more",
+    "loading": "Loading...",
+    "error": "Error",
+    "not_found": "Not found"
+  },
+  "seo": {
+    "default_title": "Rusden - Turkey Classifieds",
+    "default_description": "Classifieds platform for Russian speakers in Turkey. Real estate, jobs, services and goods.",
+    "realestate_title": "Real Estate in Turkey - buy, rent apartment, villa, house",
+    "realestate_description": "🏡 Wide selection of real estate in Turkey. Apartments, villas, houses in Istanbul, Antalya, Bodrum. Verified listings from owners and agencies.",
+    "jobs_title": "Jobs in Turkey for Russian speakers",
+    "jobs_description": "💼 Current job vacancies in Turkey for Russian-speaking professionals. Jobs in Istanbul, Antalya and other cities."
+  }
+}

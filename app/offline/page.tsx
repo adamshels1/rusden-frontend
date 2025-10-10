@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import { Button } from '@heroui/button';
 import { Card, CardBody, CardHeader } from '@heroui/card';
-import { Icon } from '@heroui/icon';
 
 export const metadata: Metadata = {
   title: 'Офлайн режим - Rusden',
@@ -18,7 +17,7 @@ export default function OfflinePage() {
       <Card className="w-full max-w-md">
         <CardHeader className="flex flex-col items-center pb-0">
           <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-4">
-            <Icon className="w-8 h-8 text-gray-500" name="wifi-off" />
+            <span className="text-3xl text-gray-500">📵</span>
           </div>
           <h1 className="text-2xl font-bold text-center text-gray-900">
             Офлайн режим
