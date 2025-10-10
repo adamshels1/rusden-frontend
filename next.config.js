@@ -35,32 +35,9 @@ const nextConfig = {
     unoptimized: process.env.NODE_ENV === 'development',
   },
 
-  // Redirects
+  // Redirects - temporarily disabled for debugging
   async redirects() {
-    return [
-      // Legacy URLs
-      {
-        source: '/estate/:path*',
-        destination: '/nedvizhimost/:path*',
-        permanent: true,
-      },
-      {
-        source: '/jobs/:path*',
-        destination: '/rabota/:path*',
-        permanent: true,
-      },
-      {
-        source: '/services/:path*',
-        destination: '/uslugi/:path*',
-        permanent: true,
-      },
-      // Remove trailing slashes
-      {
-        source: '/:path*/',
-        destination: '/:path*',
-        permanent: true,
-      },
-    ];
+    return [];
   },
 
   // Rewrites for API
