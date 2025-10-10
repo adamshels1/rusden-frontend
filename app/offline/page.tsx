@@ -1,15 +1,12 @@
-import { Metadata } from 'next';
+"use client";
+
 import { Button } from '@heroui/button';
 import { Card, CardBody, CardHeader } from '@heroui/card';
+import { useEffect } from 'react';
 
-export const metadata: Metadata = {
-  title: 'Офлайн режим - Rusden',
-  description: 'Вы в офлайн режиме. Некоторые функции могут быть недоступны.',
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+useEffect(() => {
+  document.title = 'Офлайн режим - Rusden';
+}, []);
 
 export default function OfflinePage() {
   return (

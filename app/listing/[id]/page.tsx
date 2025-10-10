@@ -165,9 +165,18 @@ export default function ListingDetailPage() {
               <div className="flex flex-col gap-4">
                 <div
                   className="w-full aspect-[4/3] overflow-hidden rounded-xl bg-default-100 flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
+                  role="button"
+                  tabIndex={0}
                   onClick={() => {
                     setLightboxIndex(selectedImage);
                     setLightboxOpen(true);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setLightboxIndex(selectedImage);
+                      setLightboxOpen(true);
+                    }
                   }}
                 >
                   <Image

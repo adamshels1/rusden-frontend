@@ -34,7 +34,7 @@ export const generateKeywords = (text: string, additionalKeywords?: string[]): s
     'эмиграция', 'жизнь в турции', 'работа', 'квартира', 'вилла'
   ];
 
-  return [...new Set([...defaultKeywords, ...words, ...(additionalKeywords || [])])]
+  return Array.from(new Set([...defaultKeywords, ...words, ...(additionalKeywords || [])]))
     .slice(0, 15);
 };
 

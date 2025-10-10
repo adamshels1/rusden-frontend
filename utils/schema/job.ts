@@ -56,7 +56,7 @@ export const generateJobSchema = (job: JobPosting): JsonLdData => {
 };
 
 export const generateJobAggregateSchema = (jobs: JobPosting[]): JsonLdData => {
-  const jobTypes = [...new Set(jobs.map(job => job.employmentType))];
+  const jobTypes = Array.from(new Set(jobs.map(job => job.employmentType)));
 
   return {
     '@context': 'https://schema.org',

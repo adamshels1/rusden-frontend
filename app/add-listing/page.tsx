@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Card, CardBody } from "@heroui/card";
 import { Input, Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
@@ -291,10 +292,12 @@ export default function AddListingPage() {
               <div className="flex flex-wrap gap-4">
                 {imagePreviews.map((preview, index) => (
                   <div key={index} className="relative w-32 h-32">
-                    <img
+                    <Image
                       alt={`Preview ${index + 1}`}
                       className="w-full h-full object-cover rounded-lg"
                       src={preview}
+                      width={128}
+                      height={128}
                     />
                     <button
                       className="absolute -top-2 -right-2 bg-danger text-white rounded-full p-1"
