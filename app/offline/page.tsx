@@ -4,11 +4,10 @@ import { Button } from '@heroui/button';
 import { Card, CardBody, CardHeader } from '@heroui/card';
 import { useEffect } from 'react';
 
-useEffect(() => {
-  document.title = 'Офлайн режим - Rusden';
-}, []);
-
 export default function OfflinePage() {
+  useEffect(() => {
+    document.title = 'Офлайн режим - Rusden';
+  }, []);
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <Card className="w-full max-w-md">
