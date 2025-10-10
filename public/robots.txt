@@ -1,0 +1,41 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /profile/
+Disallow: /dashboard/
+Disallow: /settings/
+Disallow: /login/
+Disallow: /register/
+Disallow: /search?
+Disallow: /*?sort=
+Disallow: /*?page=0$
+Disallow: /*/page/0$
+Disallow: /*.json$
+
+# Block aggressive crawlers
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SEMrushBot
+Disallow: /
+
+# Allow specific crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Yandexbot
+Allow: /
+Crawl-delay: 1
+
+# Sitemaps
+Sitemap: https://rusden.com/sitemap.xml
+
+# Host directive for Russian search engines
+Host: https://rusden.com
+
+# Crawl-delay for politeness
+Crawl-delay: 1
