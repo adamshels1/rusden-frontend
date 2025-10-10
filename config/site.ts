@@ -34,7 +34,7 @@ export const siteConfig = {
   twitter: {
     handle: "@rusden_turkey",
     site: "@rusden_turkey",
-    cardType: "summary_large_image",
+    cardType: "summary_large_image" as const,
   },
 
   // Navigation items
