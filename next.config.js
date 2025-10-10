@@ -35,9 +35,26 @@ const nextConfig = {
     unoptimized: process.env.NODE_ENV === 'development',
   },
 
-  // Redirects - temporarily disabled for debugging
+  // Safe redirects for SEO
   async redirects() {
-    return [];
+    return [
+      // Legacy URLs (safe redirects)
+      {
+        source: '/estate/:path*',
+        destination: '/nedvizhimost/:path*',
+        permanent: true,
+      },
+      {
+        source: '/jobs/:path*',
+        destination: '/rabota/:path*',
+        permanent: true,
+      },
+      {
+        source: '/services/:path*',
+        destination: '/uslugi/:path*',
+        permanent: true,
+      },
+    ];
   },
 
   // Rewrites for API

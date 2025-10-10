@@ -16,7 +16,7 @@ export const siteConfig = {
     "станбул недвижимость",
     "анталья недвижимость"
   ],
-  url: "https://rusden.com",
+  url: "https://rusden.tr",
   locale: "ru",
   author: "Rusden Team",
 

@@ -9,6 +9,7 @@ import { fontSans } from "@/config/fonts";
 import { NavbarWrapper } from "@/components/navbar-wrapper";
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://rusden.tr'),
   title: {
     default: siteConfig.seo.defaultTitle,
     template: `%s - ${siteConfig.name}`,
@@ -18,6 +19,14 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.author }],
   creator: siteConfig.author,
   publisher: siteConfig.name,
+  alternates: {
+    canonical: 'https://rusden.tr',
+    languages: {
+      'ru': 'https://rusden.tr',
+      'tr': 'https://rusden.tr/tr',
+      'en': 'https://rusden.tr/en',
+    },
+  },
   robots: {
     index: true,
     follow: true,
