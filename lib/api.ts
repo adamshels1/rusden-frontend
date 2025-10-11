@@ -71,7 +71,9 @@ export async function getCategories(): Promise<string[]> {
 }
 
 export async function getCities(): Promise<string[]> {
-  const response = await fetch(`${API_URL}/listings/cities`, {
+  const apiUrl = `${API_URL}/listings/cities`;
+
+  const response = await fetch(apiUrl, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

@@ -72,9 +72,9 @@ export const Navbar = () => {
           className="sm:hidden"
         />
         <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <NextLink className="flex justify-start items-center gap-2" href="/">
-            <Logo />
-            <p className="font-bold text-xl text-inherit">Rusden</p>
+          <NextLink className="flex justify-start items-center gap-4 pl-2" href="/">
+            <Logo size={28} />
+            <p className="font-bold text-3xl text-inherit">Rusden</p>
           </NextLink>
         </NavbarBrand>
       </NavbarContent>

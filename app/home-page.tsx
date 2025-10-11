@@ -97,7 +97,7 @@ export default function HomePage() {
   return (
     <section className="flex flex-col gap-6 py-8 md:py-10 px-4 md:px-6 max-w-7xl mx-auto">
       <div className="flex flex-col gap-4">
-        <h1 className="text-4xl font-bold">Rusden</h1>
+        {/* <h1 className="text-4xl font-bold">Rusden</h1> */}
         <p className="text-default-500">
           Объявления для русскоязычных в Турции
         </p>
