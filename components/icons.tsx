@@ -14,11 +14,12 @@ export const Logo: React.FC<IconSvgProps> = ({
     height={size || height}
     width={size || width}
     className={className}
+    radius={22}
   />
 );
 
 export const DiscordIcon: React.FC<IconSvgProps> = ({
-  size = 24,
+  size = 44,
   width,
   height,
   ...props

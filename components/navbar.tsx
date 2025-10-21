@@ -73,7 +73,7 @@ export const Navbar = () => {
         />
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-4 pl-2" href="/">
-            <Logo size={28} />
+            <Logo size={44} />
             <p className="font-bold text-3xl text-inherit">Rusden</p>
           </NextLink>
         </NavbarBrand>
