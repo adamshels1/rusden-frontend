@@ -13,8 +13,7 @@ export const Logo: React.FC<IconSvgProps> = ({
     alt="Rusden Logo"
     height={size || height}
     width={size || width}
-    className={className}
-    radius={22}
+    className={`rounded-xl ${className || ""}`}
   />
 );
 
