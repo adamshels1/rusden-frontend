@@ -18,6 +18,7 @@ import {
   DropdownItem,
 } from "@heroui/dropdown";
 import { Button } from "@heroui/button";
+import { Divider } from "@heroui/divider";
 import { FiChevronDown } from "react-icons/fi";
 import { Link } from "@heroui/link";
 import NextLink from "next/link";
@@ -205,6 +206,30 @@ export const Navbar = () => {
             </NavbarMenuItem>
           );
         })}
+
+        <Divider className="my-2" />
+
+        {/* Юридические ссылки в мобильном меню */}
+        <NavbarMenuItem>
+          <Link
+            className="w-full"
+            color="foreground"
+            href="/terms"
+            size="md"
+          >
+            Условия использования
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Link
+            className="w-full"
+            color="foreground"
+            href="/privacy"
+            size="md"
+          >
+            Политика конфиденциальности
+          </Link>
+        </NavbarMenuItem>
       </NavbarMenu>
     </HeroUINavbar>
   );
