@@ -4,6 +4,8 @@ import { Suspense } from "react";
 import HomePage from "./home-page";
 import { Spinner } from "@heroui/spinner";
 
+export const dynamic = 'force-dynamic';
+
 export default function Page() {
   return (
     <Suspense
