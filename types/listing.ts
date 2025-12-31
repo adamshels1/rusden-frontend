@@ -13,11 +13,11 @@ export interface Listing {
   category: string;
   subcategory?: string | null;
   location: string | null;
-  contact_info: ContactInfo;
+  contactInfo: ContactInfo;
   images: string[] | null;
-  posted_date: string;
-  ai_confidence: number | null;
-  created_at: string;
+  postedDate: string;
+  aiConfidence: number | null;
+  createdAt: string;
 }
 
 export interface ListingsResponse {

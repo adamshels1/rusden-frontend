@@ -95,7 +95,7 @@ export default function ListingDetailPage() {
     );
   }
 
-  const formattedDate = formatDistanceToNow(new Date(listing.posted_date), {
+  const formattedDate = formatDistanceToNow(new Date(listing.postedDate), {
     addSuffix: true,
     locale: ru,
   });
@@ -216,31 +216,31 @@ export default function ListingDetailPage() {
                 </p>
               </div>
 
-              {(listing.contact_info?.phone ||
-                listing.contact_info?.telegram) && (
+              {(listing.contactInfo?.phone ||
+                listing.contactInfo?.telegram) && (
                 <div>
                   <h2 className="text-xl font-semibold mb-2">Контакты</h2>
                   <div className="flex flex-col gap-2">
-                    {listing.contact_info.phone && (
+                    {listing.contactInfo.phone && (
                       <Button
                         as="a"
                         className="w-full sm:w-auto bg-[#25D366] text-white hover:bg-[#20BA5A]"
-                        href={`https://wa.me/${listing.contact_info.phone.replace(/[^0-9]/g, "")}`}
+                        href={`https://wa.me/${listing.contactInfo.phone.replace(/[^0-9]/g, "")}`}
                         startContent={<FaWhatsapp />}
                         target="_blank"
                       >
-                        {listing.contact_info.phone}
+                        {listing.contactInfo.phone}
                       </Button>
                     )}
-                    {listing.contact_info.telegram && (
+                    {listing.contactInfo.telegram && (
                       <Button
                         as="a"
                         className="w-full sm:w-auto bg-[#0088cc] text-white hover:bg-[#006699]"
-                        href={`https://t.me/${listing.contact_info.telegram.replace("@", "")}`}
+                        href={`https://t.me/${listing.contactInfo.telegram.replace("@", "")}`}
                         startContent={<FaTelegram />}
                         target="_blank"
                       >
-                        {listing.contact_info.telegram}
+                        {listing.contactInfo.telegram}
                       </Button>
                     )}
                   </div>
@@ -250,10 +250,10 @@ export default function ListingDetailPage() {
               <Divider />
 
               <div className="flex flex-col gap-2 text-small text-default-500">
-                {listing.ai_confidence && (
+                {listing.aiConfidence && (
                   <p>
                     Точность категоризации:{" "}
-                    {Math.round(listing.ai_confidence * 100)}%
+                    {Math.round(listing.aiConfidence * 100)}%
                   </p>
                 )}
               </div>

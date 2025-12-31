@@ -18,7 +18,7 @@ export function ListingCard({ listing, currentPage }: ListingCardProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const formattedDate = formatDistanceToNow(new Date(listing.posted_date), {
+  const formattedDate = formatDistanceToNow(new Date(listing.postedDate), {
     addSuffix: true,
     locale: ru,
   });
