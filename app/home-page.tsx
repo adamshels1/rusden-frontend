@@ -105,7 +105,7 @@ export default function HomePage() {
 
       <SearchBar value={search} onChange={setSearch} />
 
-      <FiltersBar filters={filters} onFiltersChange={setFilters} />
+      {/* <FiltersBar filters={filters} onFiltersChange={setFilters} /> */}
 
       {loading ? (
         <div className="flex justify-center items-center py-20">

@@ -18,7 +18,10 @@ export function FiltersBar({ filters, onFiltersChange }: FiltersBarProps) {
   const [subcategories, setSubcategories] = useState<string[]>([]);
 
   useEffect(() => {
-    getCities().then(setCities).catch(console.error);
+    getCities().then(setCities).catch((error) => {
+      console.error('Error loading cities:', error);
+      setCities([]);
+    });
   }, []);
 
   // Загружаем подкатегории когда меняется категория
