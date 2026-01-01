@@ -27,30 +27,20 @@ export default function HomePage() {
   const [totalListings, setTotalListings] = useState(0);
   const [shouldRestore, setShouldRestore] = useState(false);
 
-  // Сохраняем состояние перед переходом на страницу объявления
-  useEffect(() => {
-    const saveState = () => {
-      if (listings.length > 0) {
-        sessionStorage.setItem('listingsState', JSON.stringify({
-          listings,
-          page,
-          totalListings,
-          search,
-          filters,
-          scrollY: window.scrollY,
-          timestamp: Date.now()
-        }));
-      }
-    };
-
-    // Сохраняем при переходах
-    window.addEventListener('beforeunload', saveState);
-
-    return () => {
-      window.removeEventListener('beforeunload', saveState);
-      saveState(); // Сохраняем при размонтировании компонента
-    };
-  }, [listings, page, totalListings, search, filters]);
+  // Функция сохранения состояния
+  const saveState = () => {
+    if (listings.length > 0) {
+      sessionStorage.setItem('listingsState', JSON.stringify({
+        listings,
+        page,
+        totalListings,
+        search,
+        filters,
+        scrollY: window.scrollY,
+        timestamp: Date.now()
+      }));
+    }
+  };
 
   // Восстанавливаем состояние при возврате
   useEffect(() => {
@@ -190,6 +180,7 @@ export default function HomePage() {
                 key={listing.id}
                 currentPage={page}
                 listing={listing}
+                onNavigate={saveState}
               />
             ))}
           </div>

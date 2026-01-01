@@ -12,9 +12,10 @@ import { ru } from "date-fns/locale";
 interface ListingCardProps {
   listing: Listing;
   currentPage?: number;
+  onNavigate?: () => void;
 }
 
-export function ListingCard({ listing, currentPage }: ListingCardProps) {
+export function ListingCard({ listing, currentPage, onNavigate }: ListingCardProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -37,15 +38,10 @@ export function ListingCard({ listing, currentPage }: ListingCardProps) {
   };
 
   const handleClick = () => {
-    // Сохраняем текущие параметры URL для возврата назад
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (currentPage && currentPage > 1) {
-      params.set("page", currentPage.toString());
+    // Сохраняем полное состояние перед навигацией
+    if (onNavigate) {
+      onNavigate();
     }
-
-    // Сохраняем параметры в sessionStorage для возврата
-    sessionStorage.setItem("lastListingParams", params.toString());
 
     router.push(`/listing/${listing.id}`);
   };
