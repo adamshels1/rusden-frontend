@@ -78,10 +78,12 @@ export default function HomePage() {
   // Восстанавливаем скролл после рендеринга контента
   useEffect(() => {
     if (scrollToRestore !== null && !loading && listings.length > 0) {
-      // Используем requestAnimationFrame для гарантии, что DOM обновился
+      // Двойной requestAnimationFrame гарантирует полную отрисовку
       requestAnimationFrame(() => {
-        window.scrollTo(0, scrollToRestore);
-        setScrollToRestore(null);
+        requestAnimationFrame(() => {
+          window.scrollTo(0, scrollToRestore);
+          setScrollToRestore(null);
+        });
       });
     }
   }, [scrollToRestore, loading, listings]);
