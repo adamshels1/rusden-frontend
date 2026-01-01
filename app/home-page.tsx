@@ -26,6 +26,7 @@ export default function HomePage() {
   const [page, setPage] = useState(1);
   const [totalListings, setTotalListings] = useState(0);
   const [shouldRestore, setShouldRestore] = useState(false);
+  const [scrollToRestore, setScrollToRestore] = useState<number | null>(null);
 
   // Функция сохранения состояния
   const saveState = () => {
@@ -60,11 +61,7 @@ export default function HomePage() {
           setFilters(state.filters || {});
           setLoading(false);
           setShouldRestore(true);
-
-          // Восстанавливаем позицию скролла
-          setTimeout(() => {
-            window.scrollTo(0, state.scrollY || 0);
-          }, 100);
+          setScrollToRestore(state.scrollY || 0);
 
           // Очищаем сохраненное состояние
           sessionStorage.removeItem('listingsState');
@@ -77,6 +74,17 @@ export default function HomePage() {
       sessionStorage.removeItem('listingsState');
     }
   }, []);
+
+  // Восстанавливаем скролл после рендеринга контента
+  useEffect(() => {
+    if (scrollToRestore !== null && !loading && listings.length > 0) {
+      // Используем requestAnimationFrame для гарантии, что DOM обновился
+      requestAnimationFrame(() => {
+        window.scrollTo(0, scrollToRestore);
+        setScrollToRestore(null);
+      });
+    }
+  }, [scrollToRestore, loading, listings]);
 
   // Читаем категорию, подкатегорию и страницу из URL
   useEffect(() => {
