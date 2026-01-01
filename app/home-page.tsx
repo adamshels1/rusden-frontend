@@ -119,6 +119,11 @@ export default function HomePage() {
   }, [searchParams, shouldRestore]);
 
   useEffect(() => {
+    // Пропускаем загрузку если восстанавливаем состояние
+    if (shouldRestore) {
+      return;
+    }
+
     const fetchListings = async () => {
       setLoading(true);
       try {
@@ -144,7 +149,7 @@ export default function HomePage() {
     }, 300);
 
     return () => clearTimeout(timeoutId);
-  }, [search, filters, page]);
+  }, [search, filters, page, shouldRestore]);
 
   const totalPages = Math.ceil(totalListings / LISTINGS_PER_PAGE);
 
