@@ -23,6 +23,19 @@ export function ListingCard({ listing, currentPage }: ListingCardProps) {
     locale: ru,
   });
 
+  // Форматирование цены без .00 для целых чисел
+  const formatPrice = (price: string | number) => {
+    const numPrice = typeof price === 'string' ? parseFloat(price) : price;
+    if (isNaN(numPrice)) return price;
+
+    // Если число целое, показываем без дробной части
+    if (Number.isInteger(numPrice)) {
+      return numPrice.toLocaleString("ru-RU", { maximumFractionDigits: 0 });
+    }
+    // Если есть дробная часть, показываем до 2 знаков
+    return numPrice.toLocaleString("ru-RU", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+
   const handleClick = () => {
     // Сохраняем текущие параметры URL для возврата назад
     const params = new URLSearchParams(searchParams.toString());
@@ -124,7 +137,7 @@ export function ListingCard({ listing, currentPage }: ListingCardProps) {
       <CardFooter className="pt-0">
         {listing.price && listing.currency ? (
           <span className="text-2xl font-bold text-primary">
-            {listing.price.toLocaleString("ru-RU")} {listing.currency}
+            {formatPrice(listing.price)} {listing.currency}
           </span>
         ) : (
           <span className="text-small text-default-400">Цена не указана</span>

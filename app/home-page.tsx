@@ -25,9 +25,77 @@ export default function HomePage() {
   const [filters, setFilters] = useState<ListingFilters>({});
   const [page, setPage] = useState(1);
   const [totalListings, setTotalListings] = useState(0);
+  const [shouldRestore, setShouldRestore] = useState(false);
+
+  // Сохраняем состояние перед переходом на страницу объявления
+  useEffect(() => {
+    const saveState = () => {
+      if (listings.length > 0) {
+        sessionStorage.setItem('listingsState', JSON.stringify({
+          listings,
+          page,
+          totalListings,
+          search,
+          filters,
+          scrollY: window.scrollY,
+          timestamp: Date.now()
+        }));
+      }
+    };
+
+    // Сохраняем при переходах
+    window.addEventListener('beforeunload', saveState);
+
+    return () => {
+      window.removeEventListener('beforeunload', saveState);
+      saveState(); // Сохраняем при размонтировании компонента
+    };
+  }, [listings, page, totalListings, search, filters]);
+
+  // Восстанавливаем состояние при возврате
+  useEffect(() => {
+    const savedState = sessionStorage.getItem('listingsState');
+
+    if (savedState) {
+      try {
+        const state = JSON.parse(savedState);
+        const age = Date.now() - state.timestamp;
+
+        // Восстанавливаем только если состояние не старше 5 минут
+        if (age < 5 * 60 * 1000) {
+          setListings(state.listings);
+          setPage(state.page);
+          setTotalListings(state.totalListings);
+          setSearch(state.search || "");
+          setFilters(state.filters || {});
+          setLoading(false);
+          setShouldRestore(true);
+
+          // Восстанавливаем позицию скролла
+          setTimeout(() => {
+            window.scrollTo(0, state.scrollY || 0);
+          }, 100);
+
+          // Очищаем сохраненное состояние
+          sessionStorage.removeItem('listingsState');
+
+          return;
+        }
+      } catch (e) {
+        console.error('Error restoring state:', e);
+      }
+      sessionStorage.removeItem('listingsState');
+    }
+  }, []);
 
   // Читаем категорию, подкатегорию и страницу из URL
   useEffect(() => {
+    // Пропускаем если восстанавливаем состояние
+    if (shouldRestore) {
+      setShouldRestore(false);
+      return;
+    }
+
     const category = searchParams.get("category");
     const subcategory = searchParams.get("subcategory");
     const pageParam = searchParams.get("page");
@@ -48,7 +116,7 @@ export default function HomePage() {
     } else {
       setPage(1);
     }
-  }, [searchParams]);
+  }, [searchParams, shouldRestore]);
 
   useEffect(() => {
     const fetchListings = async () => {
